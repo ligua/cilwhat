@@ -20,6 +20,12 @@ import numpy
 import tensorflow as tf
 from imgaug import augmenters as iaa
 
+NUM_THREADS    = 8
+
+
+
+
+
 NUM_CHANNELS = 3 # RGB images
 PIXEL_DEPTH = 255
 NUM_LABELS = 2
@@ -684,7 +690,7 @@ def main(argv=None):  # pylint: disable=unused-argument
     saver = tf.train.Saver()
 
     # Create a local session to run this computation.
-    with tf.Session() as s:
+    with tf.Session(config = tf.ConfigProto(inter_op_parallelism_threads = NUM_THREADS, intra_op_parallelism_threads = NUM_THREADS)) as s:
 
 
         if RESTORE_MODEL:
